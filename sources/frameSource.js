@@ -72,10 +72,12 @@ export async function createFrameSource({ clip, clipIndex, width, height, channe
       const offsetProgress = offsetTime / layer.layerDuration;
       // console.log({ offsetProgress });
       const shouldDrawLayer = offsetProgress >= 0 && offsetProgress <= 1;
-
+      
+      //Canvas arguments
+      const canvasArgs = layer.canvasArgs
       if (shouldDrawLayer) {
         if (logTimes) console.time('frameSource.readNextFrame');
-        const rgba = await frameSource.readNextFrame(offsetProgress, canvas, offsetTime);
+        const rgba = await frameSource.readNextFrame(offsetProgress, canvas, offsetTime, canvasArgs, layer.layerDuration);
         if (logTimes) console.timeEnd('frameSource.readNextFrame');
 
         // Frame sources can either render to the provided canvas and return nothing
