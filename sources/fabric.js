@@ -96,9 +96,9 @@ export async function createCustomCanvasFrameSource({ width, height, params }) {
 
   const { onClose, onRender } = await params.func(({ width, height, canvas }));
 
-  async function readNextFrame(progress) {
+  async function readNextFrame(progress, canvas, offsetTime, canvasArgs, duration) {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    await onRender(progress);
+    await onRender(progress, canvasArgs, offsetTime, duration);
     // require('fs').writeFileSync(`${new Date().getTime()}.png`, canvas.toBuffer('image/png'));
     // I don't know any way to draw a node-canvas as a layer on a fabric.js canvas, other than converting to rgba first:
     return canvasToRgba(context);
